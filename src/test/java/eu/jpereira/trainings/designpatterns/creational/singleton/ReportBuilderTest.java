@@ -51,8 +51,8 @@ public class ReportBuilderTest {
 		for (int i = 0; i < 10; i++) {
 			Thread worker = new Thread(new Worker(i, references));
 			threads.add(worker);
-			worker.start();
-			// worker.join();
+			 //worker.start();
+			 worker.join();
 
 		}
 

@@ -36,7 +36,7 @@ public class ReportBuilder {
 
 	// Class variables
 	// Single instance
-	private volatile static ReportBuilder instance; //Zmiana +volatile
+	private static volatile ReportBuilder instance; //Zmiana +volatile
 	private static List<String> configuredSites;
 
 	// Class initializer block
@@ -90,12 +90,16 @@ public class ReportBuilder {
 	 * 
 	 * @return A single instance
 	 */
-	public static synchronized ReportBuilder getinstance() { //zmiana +synchronized
+	public static ReportBuilder getinstance() { //zmiana +synchronized
 		System.out.println("Getting instance for Thread " + Thread.currentThread().getId());
 		if (instance == null) {
-			System.out.println("instance is null for Thread " + Thread.currentThread().getId());
-			instance = new ReportBuilder();
-			System.out.println("Returing " + instance.hashCode() + " instance to Thread " + Thread.currentThread().getId());
+			synchronized(ReportBuilder.class){
+				if(instance == null){
+					System.out.println("instance is null for Thread " + Thread.currentThread().getId());
+					instance = new ReportBuilder();
+					System.out.println("Returing " + instance.hashCode() + " instance to Thread " + Thread.currentThread().getId());
+				}
+			}
 		}
 		return instance;
 	}
